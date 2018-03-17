@@ -15,6 +15,7 @@ The following repos contain interesting code for the hackathon:
 
 * Cisco's Fluffy's code
   - https://github.com/fluffy/rtcweb-identity
+  - Presentation on RTCWeb Identity https://github.com/alvestrand/id-hackathon/blob/master/WebRTC_Identity_v42.pdf
 
 * Add Your Code HERE 
 
