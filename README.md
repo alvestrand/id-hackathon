@@ -16,7 +16,10 @@ The following repos contain interesting code for the hackathon:
 * Cisco's Fluffy's code
   - https://github.com/fluffy/rtcweb-identity
   - Presentation on RTCWeb Identity https://github.com/alvestrand/id-hackathon/blob/master/WebRTC_Identity_v42.pdf
-
+* The Shortest Possible IdP
+  * subdirectory "clienthack"
+  * running demo: call by
+     - pc.setIdentityProvider("www.alvestrand.no", "identity-provider.js", "hint-anonymous");
 * Add Your Code HERE 
 
 # Other pages
