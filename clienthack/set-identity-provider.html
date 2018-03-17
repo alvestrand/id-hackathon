@@ -1,0 +1,49 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <script>
+pc = new RTCPeerConnection();
+pc.setIdentityProvider("localhost:8124", "identity-provider.js",
+		      "hint-anonymous");
+// The spec says:
+// pc.setIdentityProvider("localhost:8123", {
+//   protocol: "protocol",
+//  usernameHint: "anonymous",
+//  peerIdentity: "evil@genius.com"
+//});
+console.log('Identity provider set');
+
+async function assertion() {
+  console.log('Asking for an assertion');
+  assertion = await pc.getIdentityAssertion();
+  console.log('Got assertion ' + assertion);
+  console.log(atob(assertion));
+}
+assertion();
+
+
+async function makeOffer() {
+  console.log('Asking for streams');
+  stream = await navigator.mediaDevices.getUserMedia({audio: true});
+  pc.addStream(stream);
+  console.log('Asking for an offer');
+  offer = await pc.createOffer();
+  console.log('Offer returned');
+  return offer;
+}
+
+async function connect() {
+  offer = await makeOffer();
+  await pc.setLocalDescription(offer);
+  window.pc2 = pc2 = new RTCPeerConnection();
+  console.log('Verifying offer');
+  await pc2.setRemoteDescription(offer);
+  console.log('Offer verified');
+}
+
+connect();
+
+    </script>
+  </body>
+</html>
