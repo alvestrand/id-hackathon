@@ -10,5 +10,8 @@ The following repos contain interesting code for the hackathon:
 
 
 * Mozilla's Martin's code
+
+* Cisco's Fluffy's code
+
 * ....
 
