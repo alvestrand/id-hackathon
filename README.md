@@ -4,10 +4,10 @@ Notes, code and pointers for the IETF Hackathon project "WebRTC Identity" at Lon
 
 The following repos contain interesting code for the hackathon:
 * CoSMo's code
-CoSMo Implementation:
-- https://github.com/CoSMoSoftware/idp
-- https://github.com/CoSMoSoftware/idp-scaffolding
-- modified appRTC using those IN PROGRESS
+  CoSMo Implementation:
+  - https://github.com/CoSMoSoftware/idp
+  - https://github.com/CoSMoSoftware/idp-scaffolding
+  - modified appRTC using those IN PROGRESS
 
 
 * Mozilla's Martin's code
