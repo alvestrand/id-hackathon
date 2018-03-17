@@ -8,7 +8,7 @@ const idp = {
   generateAssertion: function(content, origin, usernameHint) {
     return Promise.resolve({
       idp: {
-	domain: 'localhost:8124',
+	domain: location.origin,
 	protocol: 'identity-provider.js',
       },
       assertion: 'assertion(' + content + ', '
