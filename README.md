@@ -12,9 +12,10 @@ The following repos contain interesting code for the hackathon:
 - https://github.com/CoSMoSoftware/idp-scaffolding
 - modified appRTC using those IN PROGRESS
 
-I (sergio) have put together some code to create a p2p server integrated with idp: https://github.com/CoSMoSoftware/idp-p2p
-I have also setup so you can test it online easily:
-https://p2p-cosmo.ddns.net/
+I (sergio) have put together some code to create a p2p server integrated with idp: https://github.com/CoSMoSoftware/idp-p2p<br><br>
+
+I (sergio) have also setup so you can test it online easily: https://p2p-cosmo.ddns.net/ <br><br>
+
 When testing with Firefox nightly I sometimes get an "unreadable" error on gUM, and I get sometimes an ice connection error which I have not yet been able to debug, but idp works.
 
 ## Mozilla's Martin's code
