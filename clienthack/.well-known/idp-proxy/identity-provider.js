@@ -11,16 +11,18 @@ const idp = {
 	domain: location.origin,
 	protocol: 'identity-provider.js',
       },
-      assertion: 'assertion(' + content + ', '
-	  + origin + ', ' + usernameHint + ')',
+      assertion: JSON.stringify({content: content,
+				 origin: origin,
+				 usernameHint: usernameHint}),
     });
   },
-  validateAssertion: function(assertion, origin) {
+  validateAssertion: function(assertion_string) {
+    assertion = JSON.parse(assertion_string);
     return Promise.resolve({
       identity: 'evil.genius.verified',
-      contents: 'validated assertion'
+      contents: assertion.content
     });
-  },
+  }
 };
 
 function init() {
@@ -39,7 +41,8 @@ if (typeof(module) !== 'undefined') {
   module.exports = {
     init: init,
     setRegistrar: function(reg) {
-      rtcIdentityProvider = reg; }
+      rtcIdentityProvider = reg;
+    }
   };
 } else {
   init();

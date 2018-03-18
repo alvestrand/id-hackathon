@@ -1,10 +1,31 @@
 <html>
   <head>
   </head>
-  <body>
+    <body>
+    <h1><marquee>Identity provider test page</marquee></h1>
+    <input id="provider" type="text" value="idp-proxy.ddns.net">
+    <input id="protocol" type="text" value="idp.js">
+    <div id="log">
+    </div>
     <script>
-pc = new RTCPeerConnection();
-pc.setIdentityProvider("www.alvestrand.no", "identity-provider.js",
+
+var log_element = document.getElementById("log");
+var provider_element = document.getElementById("provider");
+var protocol_element = document.getElementById("protocol");
+
+var pc;
+
+function log(text) {
+  console.log(text);
+  log_element.innerHTML += text;
+  log_element.innerHTML += "<br>";
+}
+
+function set_identity_provider() {
+  provider = provider_element.value;
+  protocol = protocol_element.value;
+  pc = new RTCPeerConnection();
+  pc.setIdentityProvider(provider, protocol,
 		      "hint-anonymous");
 // The spec says:
 // pc.setIdentityProvider("localhost:8123", {
@@ -12,24 +33,34 @@ pc.setIdentityProvider("www.alvestrand.no", "identity-provider.js",
 //  usernameHint: "anonymous",
 //  peerIdentity: "evil@genius.com"
 //});
-console.log('Identity provider set');
+  log('Identity provider set to ' + provider + ' ' + protocol);
+}
 
-async function assertion() {
-  console.log('Asking for an assertion');
-  assertion = await pc.getIdentityAssertion();
-  console.log('Got assertion ' + assertion);
-  console.log(atob(assertion));
+set_identity_provider();
+
+function assertion() {
+  log('Asking for an assertion');
+  pc.getIdentityAssertion()
+      .then(assertion => {
+	log('Got assertion ' + assertion);
+	log(atob(assertion));
+      })
+      .catch(e => {
+	log('error name: ' + e.name);
+	log('detail: ' + e.errorDetail);
+	log('IDP login url: ' + pc.idpLoginUrl);
+      });
 }
 assertion();
 
 
 async function makeOffer() {
-  console.log('Asking for streams');
+  log('Asking for streams');
   stream = await navigator.mediaDevices.getUserMedia({audio: true});
   pc.addStream(stream);
-  console.log('Asking for an offer');
+  log('Asking for an offer');
   offer = await pc.createOffer();
-  console.log('Offer returned');
+  log('Offer returned');
   return offer;
 }
 
@@ -37,12 +68,22 @@ async function connect() {
   offer = await makeOffer();
   await pc.setLocalDescription(offer);
   window.pc2 = pc2 = new RTCPeerConnection();
-  console.log('Verifying offer');
+  log('Verifying offer');
   await pc2.setRemoteDescription(offer);
-  console.log('Offer verified');
+  log('Offer accepted, getting identity');
+  // log('identity: ', await pc2.peerIdentity);
+  pc2.peerIdentity.then(
+      id => {
+	log('Identity: ' + JSON.stringify(id));
+      }).catch(e => log('Error: ' + e));
+
 }
 
-connect();
+try {
+  connect();
+} catch (e) {
+  log(JSON.stringify(e));
+}
 
     </script>
   </body>
